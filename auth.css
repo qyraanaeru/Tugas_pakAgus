@@ -1,0 +1,144 @@
+/* ===== Tampilan halaman autentikasi (login, daftar, lupa password, OTP) ===== */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body.auth-body {
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    color: #fff;
+    background:
+        radial-gradient(ellipse 42% 38% at 0% 24%,  #d2e5ff 0%, rgba(210,229,255,0) 72%),
+        radial-gradient(ellipse 38% 42% at 30% 22%, #86b8fb 0%, rgba(134,184,251,0) 72%),
+        radial-gradient(ellipse 40% 36% at 100% 22%, #70a5ee 0%, rgba(112,165,238,0) 72%),
+        radial-gradient(ellipse 36% 40% at 100% 58%, #2a62b4 0%, rgba(42,98,180,0) 72%),
+        radial-gradient(ellipse 45% 40% at 5% 82%,  #78aef6 0%, rgba(120,174,246,0) 72%),
+        radial-gradient(ellipse 48% 38% at 78% 100%, #0a3b8c 0%, rgba(10,59,140,0) 72%),
+        linear-gradient(160deg, #5a93dc 0%, #4a82cc 48%, #2f64b4 100%);
+    background-attachment: fixed;
+    background-color: #3f7fd0;
+}
+
+.auth-wrap {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 16px;
+}
+.auth-box { width: 100%; max-width: 300px; text-align: center; }
+
+/* Ikon pengguna bulat */
+.avatar {
+    width: 96px; height: 96px; margin: 0 auto 10px;
+    border-radius: 50%; background: #06408f;
+    display: flex; align-items: center; justify-content: center;
+}
+.avatar svg { width: 60px; height: 60px; }
+
+.auth-title {
+    margin: 0 0 46px;
+    font-weight: 300; font-size: 26px;
+    letter-spacing: .15em; text-transform: uppercase; white-space: nowrap;
+}
+.auth-title.small { font-size: 20px; margin-bottom: 14px; }
+.auth-sub {
+    margin: 0 0 32px; font-size: 13px; line-height: 1.6;
+    font-weight: 400; color: rgba(255,255,255,.92);
+}
+
+/* Kolom isian bergaris bawah */
+.field {
+    display: flex; align-items: center; text-align: left;
+    padding-bottom: 10px; margin-bottom: 34px;
+    border-bottom: 1px solid rgba(255,255,255,.92);
+}
+.field svg { width: 18px; height: 18px; flex: none; fill: #fff; }
+.field input {
+    flex: 1; min-width: 0; margin-left: 33px;
+    background: transparent; border: 0; outline: 0;
+    color: #fff; font: inherit; font-size: 16px; letter-spacing: .06em;
+}
+.field input::placeholder { color: rgba(255,255,255,.95); opacity: 1; }
+.field input:-webkit-autofill {
+    -webkit-text-fill-color: #fff;
+    transition: background-color 99999s ease-in-out 0s;
+}
+.field:focus-within { border-bottom-color: #fff; box-shadow: 0 1px 0 #fff; }
+
+/* Baris "Remember me" + "Forgot Password?" */
+.row-between {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: -4px 0 36px; font-size: 12px;
+}
+.check { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.check input {
+    -webkit-appearance: none; appearance: none; margin: 0;
+    width: 14px; height: 14px; border-radius: 2px; background: #06408f; cursor: pointer;
+}
+.check input:checked {
+    background: #06408f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3 7.4l2.6 2.6L11 4.6' fill='none' stroke='%23fff' stroke-width='1.8'/%3E%3C/svg%3E") center/100% no-repeat;
+}
+.check input:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.italic { font-style: italic; }
+
+a { color: #fff; }
+a.plain { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Tombol utama */
+.btn-main {
+    display: block; width: calc(100% + 16px); margin: 0 -8px;
+    padding: 19px 10px; border: 0; border-radius: 0; cursor: pointer;
+    background: #033b8c; color: #fff;
+    font: inherit; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    transition: background .15s;
+}
+.btn-main:hover { background: #02307a; }
+.btn-main:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.btn-main[disabled] { opacity: .55; cursor: not-allowed; }
+
+.below { margin-top: 26px; font-size: 13px; line-height: 1.7; }
+.below a { font-weight: 600; }
+
+/* Pesan */
+.alert {
+    margin: 0 0 26px; padding: 11px 14px; text-align: left;
+    font-size: 13px; line-height: 1.5; border-radius: 4px;
+    background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.45);
+}
+.alert.error   { background: rgba(176,25,40,.55); border-color: rgba(255,200,205,.6); }
+.alert.success { background: rgba(14,120,70,.55); border-color: rgba(190,255,215,.6); }
+
+/* Captcha */
+.captcha-label { font-size: 12px; text-align: left; margin: 0 0 10px; letter-spacing: .04em; }
+.captcha-box {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 22px;
+    background: rgba(255,255,255,.92); border-radius: 4px; padding: 6px;
+}
+.captcha-box img { display: block; height: 52px; width: auto; flex: 1; min-width: 0; object-fit: contain; }
+.captcha-box button {
+    flex: none; width: 38px; height: 38px; border: 0; border-radius: 50%; cursor: pointer;
+    background: #06408f; display: flex; align-items: center; justify-content: center;
+}
+.captcha-box button svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; }
+
+/* Kotak OTP */
+.otp-inputs { display: flex; gap: 8px; justify-content: center; margin-bottom: 34px; }
+.otp-inputs input {
+    width: 40px; height: 52px; text-align: center; font: inherit; font-size: 22px; font-weight: 500;
+    color: #fff; background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.7); border-radius: 4px; outline: 0;
+}
+.otp-inputs input:focus { background: rgba(255,255,255,.26); border-color: #fff; }
+
+.link-btn {
+    background: none; border: 0; padding: 0; cursor: pointer; color: #fff;
+    font: inherit; font-size: 13px; font-weight: 600; text-decoration: underline;
+}
+.link-btn[disabled] { cursor: not-allowed; color: rgba(255,255,255,.7); text-decoration: none; font-weight: 400; }
+
+@media (max-width: 360px) {
+    .auth-title { font-size: 22px; }
+}
+
+.field.noicon input { margin-left: 0; }
+.captcha-note { font-size: 12px; margin: -10px 0 30px; text-align: left; color: rgba(255,255,255,.85); }
